@@ -7,10 +7,25 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct RecentView: View {
+    @ObservedObject var covidData = CovidDataRequest()
+    @State var searchText = ""
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView{
+            VStack{
+                CountryDataHeaderView()
+                
+                List{
+                    ForEach(covidData.countriesData, id: \.country) { countryData in
+
+                        CountryDataRowView(countryData: countryData)
+                    }
+                }
+            }//End of VStack
+        }//End of NavigationView
     }
 }
 

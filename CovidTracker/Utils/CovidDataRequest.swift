@@ -8,31 +8,26 @@
 
 import Foundation
 import Alamofire
+import AlamofireImage
 import SwiftyJSON
 
-enum CovidDataRequestError: Error {
-    case notFound
-    case forbidden
-    case unauthorized
-}
-
 class CovidDataRequest: ObservableObject{
-    @Published var globalData: GlobalData!
-    @Published var countriesData: [CountryData]! = []
+    @Published var globalData: GlobalData?
+    @Published var countriesData: [CountryData] = []
     
     init() {
-        self.getAllData()
+        getAllData()
     }
     
     func getAllData() {
         AF.request("https://api.covid19api.com/summary").responseJSON { response in
             let result = response.data
-            
+
             if result != nil{
                 let sumaryJson = JSON(result!)
                 let globalJson = JSON(sumaryJson["Global"])
                 let countriesJson = JSON(sumaryJson["Countries"])
-                
+
                 self.globalData =  GlobalData(
                     newDeaths: Int64(globalJson["NewDeaths"].intValue),
                     newRecovered: Int64(globalJson["NewRecovered"].intValue),
@@ -40,7 +35,7 @@ class CovidDataRequest: ObservableObject{
                     totalRecovered: Int64(globalJson["TotalRecovered"].intValue),
                     newConfirmed: Int64(globalJson["NewConfirmed"].intValue),
                     totalConfirmed: Int64(globalJson["TotalConfirmed"].intValue))
-                
+
                 for (_, country):(String, JSON) in countriesJson {
                     let countryData = CountryData(
                         totalRecovered: Int64(country["TotalRecovered"].intValue),
@@ -53,22 +48,20 @@ class CovidDataRequest: ObservableObject{
                         country: country["Country"].stringValue,
                         slug: country["Slug"].stringValue,
                         newDeaths: Int64(country["NewDeaths"].intValue))
-                    
+
                     self.countriesData.append(countryData)
                 }
+            } else {
+                // error handle
             }
         }
     }
     
-}
-
-extension JSON {
-  func toDate(dateFormat: String) -> Date? {
-
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = dateFormat
-
-    let date: Date? = dateFormatter.date(from: self.stringValue)
-    return date
+    func loadFlag(countryFlagURL: String){
+        AF.request(countryFlagURL).responseImage { response in
+            
+        }
     }
 }
+    
+

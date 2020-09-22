@@ -10,8 +10,6 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @ObservedObject var covidData = CovidDataRequest()
-    
     var body: some View {
         TabView{
             RecentView()
