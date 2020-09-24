@@ -2,7 +2,7 @@
 //  Extensions.swift
 //  CovidTracker
 //
-//  Created by Nikki Truong on 2020-09-21.
+//  Created by Ethan. Truong on 2020-09-21.
 //  Copyright © 2020 EthanTruong. All rights reserved.
 //
 
@@ -40,3 +40,19 @@ extension Int64 {
     }
 }
 
+extension String {
+    
+    func formarString() -> Int64{
+        let formatter = NumberFormatter()
+        formatter.groupingSeparator = ","
+        formatter.numberStyle = .decimal
+        return Int64(truncating: formatter.number(from: self)!)
+    }
+    
+    func formarString() -> Int{
+        let formatter = NumberFormatter()
+        formatter.groupingSeparator = ","
+        formatter.numberStyle = .decimal
+        return Int(truncating: formatter.number(from: self)!)
+    }
+}

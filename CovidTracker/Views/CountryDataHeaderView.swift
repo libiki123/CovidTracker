@@ -2,7 +2,7 @@
 //  ListHeaderView.swift
 //  CovidTracker
 //
-//  Created by Nikki Truong on 2020-09-19.
+//  Created by Ethan Truong on 2020-09-19.
 //  Copyright © 2020 EthanTruong. All rights reserved.
 //
 
@@ -14,8 +14,8 @@ struct CountryDataHeaderView: View {
             Text("Country")
                 .fontWeight(.bold)
                 .font(.subheadline)
-                .frame(width: 110, alignment: .leading)
-                .padding(.leading, 10)
+                .frame(width: 100, alignment: .leading)
+                .padding(.leading, 15)
             
             Spacer()
             Text("Conf.")
@@ -23,20 +23,21 @@ struct CountryDataHeaderView: View {
                 .font(.subheadline)
                 .frame(height: 40)
                 .padding(.leading, 5)
+                .padding(.trailing, 5)
             
             Spacer()
             Text("Death")
                 .fontWeight(.bold)
                 .font(.subheadline)
                 .frame(height: 40)
-                .padding(.leading, 7)
+                .padding(.leading, 5)
             
             Spacer()
             Text("Recover")
                 .fontWeight(.bold)
                 .font(.subheadline)
                 .frame(height: 40)
-                .padding(.trailing, 10)
+                .padding(.trailing, 20)
         }
         .background(Color.gray)
     }

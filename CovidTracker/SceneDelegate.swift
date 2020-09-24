@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  CovidTracker
 //
-//  Created by Nikki Truong on 2020-09-18.
+//  Created by Ethan Truong on 2020-09-18.
 //  Copyright © 2020 EthanTruong. All rights reserved.
 //
 
