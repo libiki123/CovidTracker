@@ -34,8 +34,8 @@ struct CountryDetailView: View {
                 CountryDetailRowView(name: "Total Cases", number: countryData.totalConfirmed.formatNumber(), color: .blue)
                 CountryDetailRowView(name: "Total Deaths", number: countryData.totalDeaths.formatNumber(), color: .red)
                 CountryDetailRowView(name: "Total Recovery", number: countryData.totalRecovered.formatNumber(), color: .green)
-                CountryDetailRowView(name: "Fatality %", number: countryData.fatalityRate.formatNumber(), color: .red)
-                CountryDetailRowView(name: "Recovery %", number: countryData.recoveryRate.formatNumber(), color: .green)
+                CountryDetailRowView(name: "Fatality rate", number: String(format: "%.2f%%", countryData.fatalityRate), color: .red)
+                CountryDetailRowView(name: "Recovery rate", number: String(format: "%.2f%%", countryData.recoveryRate), color: .green)
                 
                 VStack{
                     HStack{

@@ -20,9 +20,9 @@ struct GlobalDataCardsView: View {
             }// End of HStack
 
             HStack{
-                GlobalDataCardView(name: "Death %", number: String(format: "%.2f", globalData.fatalityRate), color: .red)
+                GlobalDataCardView(name: "Death R.", number: String(format: "%.2f%%", globalData.fatalityRate), color: .red)
                 GlobalDataCardView(name: "Critical", number: globalData.totalCritical.formatNumber(), color: .yellow)
-                GlobalDataCardView(name: "Recovery %", number: String(format: "%.2f", globalData.recoveryRate), color: .green)
+                GlobalDataCardView(name: "Recovery R.", number: String(format: "%.2f%%", globalData.recoveryRate), color: .green)
             }// End of HStack
 
         }//End of VStack

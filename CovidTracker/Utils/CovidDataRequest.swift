@@ -66,11 +66,11 @@ class CovidDataRequest: ObservableObject{
                         countryCode: countryJson["code"].stringValue,
                         population: Int64(countryJson["population"].intValue),
                         
-                        latitude: Int64(cordinateJson["latitude"].intValue),
-                        longtitude: Int64(cordinateJson["longitude"].intValue),
+                        latitude: Float64(cordinateJson["latitude"].floatValue),
+                        longtitude: Float64(cordinateJson["longitude"].floatValue),
                         
-                        fatalityRate: Int64(calculatedJson["death_rate"].intValue),
-                        recoveryRate: Int64(calculatedJson["recovery_rate"].intValue),
+                        fatalityRate: Float64(calculatedJson["death_rate"].floatValue),
+                        recoveryRate: Float64(calculatedJson["recovery_rate"].floatValue),
                         
                         totalDeaths: Int64(latestDataJson["deaths"].intValue),
                         totalConfirmed: Int64(latestDataJson["confirmed"].intValue),

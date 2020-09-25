@@ -39,7 +39,7 @@ struct CountryDataHeaderView: View {
                 .frame(height: 40)
                 .padding(.trailing, 20)
         }
-        .background(Color.gray)
+        .background(Color("cardsBackgroundGray"))
     }
 }
 
