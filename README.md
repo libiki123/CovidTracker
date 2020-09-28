@@ -19,7 +19,7 @@ CovidTracker is an IOS app that tracks and displays total cases, deaths, recover
 
 ## Libraries Used
 
-* <a href="https://cocoapods.org/">Cocoapods</a>:  An application that manage dependencies for the Objective-C, Swift and any other languages that run on the Objective-C runtime
+* <a href="https://cocoapods.org/">Cocoapods</a>:  An application that manage dependencies for the Objective-C, Swift and any other languages
 * <a href="https://github.com/Alamofire/Alamofire">AlamoFire</a>: Library used to manage HTTP networking
 * <a href="https://github.com/SwiftyJSON/SwiftyJSON">SwiftyJSON</a>: Library helped simplfy Json parsing 
 * <a>CoreData</a>: A framework used to manage the model layer object in the application
