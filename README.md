@@ -1,6 +1,6 @@
 # CovidTracker
 
-[![platform](https://img.shields.io/badge/platform-Android-brightgreen.svg)](https://www.android.com)
+[![platform](https://img.shields.io/badge/platform-IOS-brightgreen.svg)](https://www.android.com)
 
 
 CovidTracker is an IOS app that tracks and displays total cases, deaths, recovered and more of almost every countries in the world. The app is completely open source. I spent 2 weeks doing this as side project.  
