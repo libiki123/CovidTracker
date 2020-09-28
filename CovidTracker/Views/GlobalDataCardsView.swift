@@ -9,22 +9,28 @@
 import SwiftUI
 
 struct GlobalDataCardsView: View {
-    var globalData: GlobalData
+    
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(entity: GlobalDataModel.entity(), sortDescriptors: []) var gbData: FetchedResults<GlobalDataModel>
     
     var body: some View {
+
         VStack{
-            HStack{
-                GlobalDataCardView(name: "Cases", number: globalData.totalCases.formatNumber(), color: .black)
-                GlobalDataCardView(name: "Recovery", number: globalData.totalRecovered.formatNumber(), color: .green)
-                GlobalDataCardView(name: "Deaths", number: globalData.totalDeaths.formatNumber(), color: .red)
-            }// End of HStack
+            if(!gbData.isEmpty){
+                HStack{
+                    GlobalDataCardView(name: "Cases", number: gbData.first!.totalCases.formatNumber(), color: .black)
+                    GlobalDataCardView(name: "Recovery", number: gbData.first!.totalRecovered.formatNumber(), color: .green)
+                    GlobalDataCardView(name: "Deaths", number: gbData.first!.totalDeaths.formatNumber(), color: .red)
+                }// End of HStack
 
-            HStack{
-                GlobalDataCardView(name: "Death R.", number: String(format: "%.2f%%", globalData.fatalityRate), color: .red)
-                GlobalDataCardView(name: "Critical", number: globalData.totalCritical.formatNumber(), color: .yellow)
-                GlobalDataCardView(name: "Recovery R.", number: String(format: "%.2f%%", globalData.recoveryRate), color: .green)
-            }// End of HStack
-
+                HStack{
+                    GlobalDataCardView(name: "Death R.", number: String(format: "%.2f%%",
+                            (100 * Double(gbData.first!.totalDeaths)) / Double(gbData.first!.totalCases)), color: .red)
+                    GlobalDataCardView(name: "Critical", number: gbData.first!.totalCritical.formatNumber(), color: .yellow)
+                    GlobalDataCardView(name: "Recovery R.", number: String(format: "%.2f%%",
+                            (100 * Double(gbData.first!.totalRecovered)) / Double(gbData.first!.totalCases)), color: .green)
+                }// End of HStack
+            }
         }//End of VStack
         .frame(height: 170)
         .padding(10)
@@ -33,6 +39,6 @@ struct GlobalDataCardsView: View {
 
 struct GlobalView_Previews: PreviewProvider {
     static var previews: some View {
-        GlobalDataCardsView(globalData: blankGlobalData)
+        GlobalDataCardsView()//globalData: blankGlobalData)
     }
 }

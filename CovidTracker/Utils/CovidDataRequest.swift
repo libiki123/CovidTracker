@@ -9,12 +9,16 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import CoreData
 
 class CovidDataRequest: ObservableObject{
     @Published var globalData: GlobalData = blankGlobalData
     @Published var countriesData: [CountryData] = []
     
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     init() {
+        resetCoreData()
         getGlobalData()
         getCountriesData()
     }
@@ -38,6 +42,17 @@ class CovidDataRequest: ObservableObject{
                     totalCases: globalDataJson["total_cases"].stringValue.formarString(),
                     totalCritical: globalDataJson["serious_critical"].stringValue.formarString(),
                     totalRecovered: globalDataJson["total_recovered"].stringValue.formarString())
+                
+                let gbData = GlobalDataModel(context: self.context)
+                gbData.newCases = self.globalData.newCases
+                gbData.newDeaths = self.globalData.newDeaths
+                gbData.totalCases = self.globalData.totalCases
+                gbData.totalDeaths = self.globalData.totalDeaths
+                gbData.totalRecovered = self.globalData.totalRecovered
+                gbData.totalCritical = self.globalData.totalCritical
+                
+                try? self.context.save()
+                
             } else {
                 // error handle
             }
@@ -62,33 +77,63 @@ class CovidDataRequest: ObservableObject{
                     let todayDataJson = JSON(countryJson["today"])
 
                     let countryData = CountryData(
-                        country: countryJson["name"].stringValue,
+                        countryName: countryJson["name"].stringValue,
                         countryCode: countryJson["code"].stringValue,
                         population: Int64(countryJson["population"].intValue),
                         
-                        latitude: Float64(cordinateJson["latitude"].floatValue),
-                        longtitude: Float64(cordinateJson["longitude"].floatValue),
+                        latitude: cordinateJson["latitude"].doubleValue,
+                        longtitude: cordinateJson["longitude"].doubleValue,
                         
-                        fatalityRate: Float64(calculatedJson["death_rate"].floatValue),
-                        recoveryRate: Float64(calculatedJson["recovery_rate"].floatValue),
+                        fatalityRate: calculatedJson["death_rate"].doubleValue,
+                        recoveryRate: calculatedJson["recovery_rate"].doubleValue,
                         
                         totalDeaths: Int64(latestDataJson["deaths"].intValue),
-                        totalConfirmed: Int64(latestDataJson["confirmed"].intValue),
+                        totalCases: Int64(latestDataJson["confirmed"].intValue),
                         totalRecovered: Int64(latestDataJson["recovered"].intValue),
                         
-                        todayConfirmed: Int64(todayDataJson["deaths"].intValue),
+                        todayCases: Int64(todayDataJson["deaths"].intValue),
                         todayDeaths: Int64(todayDataJson["deaths"].intValue))
+                    
+                    let ctData = CountryDataModel(context: self.context)
+                    ctData.countryName = countryData.countryName
+                    ctData.countryCode = countryData.countryCode
+                    ctData.population = countryData.population
+                    ctData.latitude = countryData.latitude
+                    ctData.longtitude = countryData.longtitude
+                    ctData.fatalityRate = countryData.fatalityRate
+                    ctData.recoveryRate = countryData.recoveryRate
+                    ctData.totalDeaths = countryData.totalDeaths
+                    ctData.totalCases = countryData.totalCases
+                    ctData.totalRecovered = countryData.totalRecovered
+                    ctData.todayCases = countryData.todayCases
+                    ctData.todayDeaths = countryData.todayDeaths
+                    
+                    try? self.context.save()
 
-//                        date: country["Date"].toDate(dateFormat: "yyyy-MM-dd'T'HH:mm:ssZ")!
                     tempCountriesData.append(countryData)
                 }
-                self.countriesData = tempCountriesData.sorted(by: {$0.totalConfirmed > $1.totalConfirmed})
+                self.countriesData = tempCountriesData.sorted(by: {$0.totalCases > $1.totalCases})
             } else {
                 // error handle
             }
         }
     }
     
+    func resetCoreData(){
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "GlobalDataModel")
+        let fetchRequest2 = NSFetchRequest<NSFetchRequestResult>(entityName: "CountryDataModel")
+
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        let batchDeleteRequest2 = NSBatchDeleteRequest(fetchRequest: fetchRequest2)
+
+        do {
+            try context.execute(batchDeleteRequest)
+            try context.execute(batchDeleteRequest2)
+
+        } catch {
+            // Error Handling
+        }
+    }
 }
     
 

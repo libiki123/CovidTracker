@@ -14,6 +14,11 @@ struct RecentView: View {
     @State var searchText = ""
     @State var isSearchVisiable = false
     
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(entity: CountryDataModel.entity(),
+                  sortDescriptors: [NSSortDescriptor(keyPath: \CountryDataModel.totalCases, ascending: false)],
+                  predicate: NSPredicate(value: true)) var countriesData: FetchedResults<CountryDataModel>
+    
     var body: some View {
         NavigationView{
             VStack{
@@ -22,15 +27,16 @@ struct RecentView: View {
                     SearchBarView(searchText: $searchText)
                 }
                 
-                GlobalDataCardsView(globalData: covidData.globalData)
+                GlobalDataCardsView()//globalData: covidData.globalData)
                 CountryDataHeaderView()
                 
                 List{
-                    ForEach(covidData.countriesData.filter{country in
-                        return self.searchText.isEmpty ? true : country.country.lowercased().contains(self.searchText.lowercased())
-                    } , id: \.country) { countryData in
-                        NavigationLink(destination: CountryDetailView(countryData: countryData)) {
-                            CountryDataRowView(countryData: countryData)
+                    
+                    ForEach(countriesData.filter{country in
+                        return self.searchText.isEmpty ? true : country.countryName!.lowercased().contains(self.searchText.lowercased())
+                    }, id: \.countryName){ (countryData : CountryDataModel) in
+                        NavigationLink(destination: CountryDetailView(countryCode: countryData.countryCode!)) {
+                            CountryDataRowView(countryCode: countryData.countryCode!)
                         }
                     }
                 }

@@ -9,12 +9,9 @@
 import SwiftUI
 
 struct MapContainerView: View {
-    @ObservedObject var covidData = CovidDataRequest()
-    
     
     var body: some View {
-        
-        MapView(countriesData: $covidData.countriesData)
+        MapView()
     }
 }
 

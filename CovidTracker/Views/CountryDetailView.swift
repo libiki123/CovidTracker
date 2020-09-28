@@ -9,18 +9,25 @@
 import SwiftUI
 
 struct CountryDetailView: View {
-    var countryData: CountryData
+    var fetchRequest: FetchRequest<CountryDataModel>
+    var countryData: FetchedResults<CountryDataModel> { fetchRequest.wrappedValue }
+    
+    init(countryCode: String) {
+        fetchRequest = FetchRequest<CountryDataModel>(entity: CountryDataModel.entity(),
+                                                      sortDescriptors: [],
+                                                      predicate: NSPredicate(format: "countryCode = %@", countryCode))
+    }
     
     var body: some View {
         VStack{
             VStack {
                 VStack{
                     HStack{
-                        Image(countryData.countryCode)
+                        Image(countryData.first!.countryCode!)
                             .resizable()
                             .frame(width: 26, height: 21, alignment: .center)
                         
-                        Text(countryData.country)
+                        Text(countryData.first!.countryName!)
                             .fontWeight(.bold)
                         
                     }
@@ -30,12 +37,12 @@ struct CountryDetailView: View {
                 .padding(.leading)
                 .padding(.trailing)
                 
-                CountryDetailRowView(name: "Population", number: countryData.population.formatNumber())
-                CountryDetailRowView(name: "Total Cases", number: countryData.totalConfirmed.formatNumber(), color: .blue)
-                CountryDetailRowView(name: "Total Deaths", number: countryData.totalDeaths.formatNumber(), color: .red)
-                CountryDetailRowView(name: "Total Recovery", number: countryData.totalRecovered.formatNumber(), color: .green)
-                CountryDetailRowView(name: "Fatality rate", number: String(format: "%.2f%%", countryData.fatalityRate), color: .red)
-                CountryDetailRowView(name: "Recovery rate", number: String(format: "%.2f%%", countryData.recoveryRate), color: .green)
+                CountryDetailRowView(name: "Population", number: countryData.first!.population.formatNumber())
+                CountryDetailRowView(name: "Total Cases", number: countryData.first!.totalCases.formatNumber(), color: .blue)
+                CountryDetailRowView(name: "Total Deaths", number: countryData.first!.totalDeaths.formatNumber(), color: .red)
+                CountryDetailRowView(name: "Total Recovery", number: countryData.first!.totalRecovered.formatNumber(), color: .green)
+                CountryDetailRowView(name: "Fatality rate", number: String(format: "%.2f%%", countryData.first!.fatalityRate), color: .red)
+                CountryDetailRowView(name: "Recovery rate", number: String(format: "%.2f%%", countryData.first!.recoveryRate), color: .green)
                 
                 VStack{
                     HStack{
@@ -48,8 +55,8 @@ struct CountryDetailView: View {
                 .padding(.leading)
                 .padding(.trailing)
                 
-                CountryDetailRowView(name: "Cases", number: countryData.todayConfirmed.formatNumber(), color: .blue)
-                CountryDetailRowView(name: "Deaths", number: countryData.todayDeaths.formatNumber(), color: .red)
+                CountryDetailRowView(name: "Cases", number: countryData.first!.todayCases.formatNumber(), color: .blue)
+                CountryDetailRowView(name: "Deaths", number: countryData.first!.todayDeaths.formatNumber(), color: .red)
             }
             .background(Color("cardsBackgroundGray"))
             .cornerRadius(8)
@@ -63,8 +70,3 @@ struct CountryDetailView: View {
     }
 }
 
-struct CountryDetail_Previews: PreviewProvider {
-    static var previews: some View {
-        CountryDetailView(countryData: blankCountryData)
-    }
-}
