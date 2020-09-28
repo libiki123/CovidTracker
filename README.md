@@ -11,8 +11,8 @@ CovidTracker is an IOS app that tracks and displays total cases, deaths, recover
 
 * Displays total cases, deaths, recovered and more of almost every countries (and global)
   - List is searchable
-* Chosse and see detail info on each country
-* Info are updated daily and you can keep track of today's data
+* Chose and see detail info of each country
+* Data is updated daily
 * A map with details of each country
 
 ## Libraries Used
