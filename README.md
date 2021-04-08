@@ -7,8 +7,6 @@
 
 CovidTracker is an IOS app that tracks and displays total cases, deaths, recovered and more of almost every countries in the world. The app is completely open source. I spent 2 weeks doing this as side project.  
 
-<img src="images/ss1.png" height='600' width='275'/>&nbsp;&nbsp;&nbsp;<img src="images/ss2.png" height='600' width='275'/>&nbsp;&nbsp;&nbsp;<img src="images/ss3.png" height='600' width='275'/>
-
 ## Features
 
 * Displays total cases, deaths, recovered and more of almost every countries (and global)
@@ -16,6 +14,10 @@ CovidTracker is an IOS app that tracks and displays total cases, deaths, recover
 * Chose and see detail info of each country
 * Data is updated daily
 * A map with details of each country
+
+## Screenshots
+
+<img src="images/ss1.png" height='500' width='250'/>&nbsp;&nbsp;&nbsp;<img src="images/ss2.png" height='500' width='250'/>&nbsp;&nbsp;&nbsp;<img src="images/ss3.png" height='500' width='250'/>
 
 ## Libraries Used
 
