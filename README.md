@@ -17,7 +17,9 @@ CovidTracker is an IOS app that tracks and displays total cases, deaths, recover
 
 ## Screenshots
 
-<img src="images/ss1.png" height='500' width='250'/>&nbsp;&nbsp;&nbsp;<img src="images/ss2.png" height='500' width='250'/>&nbsp;&nbsp;&nbsp;<img src="images/ss3.png" height='500' width='250'/>
+<img src="images/ss1.png" height='500' width='250'/>&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="images/ss2.png" height='500' width='250'/>&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="images/ss3.png" height='500' width='250'/>
 
 ## Libraries Used
 
